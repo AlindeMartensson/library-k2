@@ -24,7 +24,6 @@ function getOne(id) {
   });
 }
 
-/*
 function addOne(book) {
   const sql = "INSERT INTO books (title, author) VALUES (?, ?)";
 
@@ -32,33 +31,52 @@ function addOne(book) {
     db.run(sql, [book.title, book.author], (error) => {
       if (error) {
         console.error(error.message);
-        res.status(400);
-        reject(error);
-      }
-      res.status(200);
-      resolve(rows);
-    });
-  });
-} */
 
-function addOne(book) {
-  const sql = "INSERT INTO books (title, author) VALUES (?,?)";
-  return new Promise((resolve, reject) => {
-    db.run(sql, [book.title, book.author], (error) => {
-      if (error) {
-        console.error(error.message);
         reject(error);
       }
-      resolve();
+
+      resolve("success");
     });
   });
 }
 
-function putBook() {}
+function putBook(id, book) {
+  const sql = "UPDATE books SET title = ?, author = ? WHERE id = ?";
+
+  return new Promise((resolve, reject) => {
+    db.run(sql, [book.title, book.author, id], (error) => {
+      if (error) {
+        console.error(error.message);
+
+        reject(error);
+      }
+
+      resolve("success");
+    });
+  });
+}
+
+//Patch book
+
+function deleteBook(id) {
+  const sql = "DELETE FROM books WHERE id = ?";
+
+  return new Promise((resolve, reject) => {
+    db.run(sql, id, function (error) {
+      if (error) {
+        console.log(error.message);
+        reject(error);
+      }
+
+      resolve("success");
+    });
+  });
+}
 
 module.exports = {
   getAll,
   getOne,
   addOne,
   putBook,
+  deleteBook,
 };

@@ -9,7 +9,7 @@ const db = new sqlite3.Database("./db.sqlite", (error) => {
     CREATE TABLE books (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT,
-        author TEXT
+        author TEXT,
     ) `;
 
   db.run(userStatement, (error) => {
